@@ -7,6 +7,8 @@ repositories {
     jcenter()
 }
 
+targetCompatibility = 1.8
+
 description 'Library for comparing dependencies in configurations'
 
 group = 'com.netflix.nebula'

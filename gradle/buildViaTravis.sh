@@ -18,7 +18,7 @@ elif [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_TAG" != "" ]; then
     ./gradlew -Prelease.travisci=true -Psonatype.username=$sonatypeUsername -Psonatype.password=$sonatypePassword -Pbintray.user=$bintrayUser -Pbintray.apiKey=$bintrayKey  -Prelease.useLastTag=true candidate $SWITCHES
     ;;
   *)
-    ./gradlew -Prelease.travisci=true -Dgradle.publish.key=$gradlePluginPublishKey -Dgradle.publish.secret=$gradlePluginPublishSecret -Psonatype.username=$sonatypeUsername -Psonatype.password=$sonatypePassword -Pbintray.user=$bintrayUser -Pbintray.apiKey=$bintrayKey  -Prelease.useLastTag=true final $SWITCHES
+    ./gradlew -Prelease.travisci=true -Psonatype.username=$sonatypeUsername -Psonatype.password=$sonatypePassword -Pbintray.user=$bintrayUser -Pbintray.apiKey=$bintrayKey  -Prelease.useLastTag=true final $SWITCHES
     ;;
   esac
 else

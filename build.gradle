@@ -1,7 +1,6 @@
 plugins {
     id "nebula.netflixoss" version "8.0.0"
     id "groovy"
-    id "nebula.dependency-lock" version "8.3.0" // keep this until nebula.netflixoss catches up to at least this version 
 }
 
 repositories {

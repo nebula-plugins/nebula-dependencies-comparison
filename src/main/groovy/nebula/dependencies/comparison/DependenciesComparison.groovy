@@ -38,4 +38,27 @@ class DependenciesComparison {
 
         memory.values().toSorted()
     }
+
+    Map<String, List<DependencyDiff>> performDiffByConfiguration(ConfigurationsSet old, ConfigurationsSet updated) {
+        Map
+        Set<String> configurations = old.configurations() + updated.configurations()
+        configurations.collectEntries { configuration ->
+            Dependencies oldDependencies = old.dependenciesForConfiguration(configuration)
+            Dependencies updatedDependencies = updated.dependenciesForConfiguration(configuration)
+
+            Set<String> allDependencies = oldDependencies.allModules() + updatedDependencies.allModules()
+            List<DependencyDiff> allDiffsInConfig = allDependencies.collect { dependency ->
+                String oldVersion = oldDependencies.usedVersion(dependency)
+                String updatedVersion = updatedDependencies.usedVersion(dependency)
+
+                if (oldVersion != updatedVersion) {
+                    DependencyDiff diff = new DependencyDiff(dependency)
+                    diff.addDiff(oldVersion, updatedVersion, configuration)
+                    return diff
+                } else
+                    return null
+            }.findAll {it != null }
+            [configuration, allDiffsInConfig]
+        }
+    }
 }

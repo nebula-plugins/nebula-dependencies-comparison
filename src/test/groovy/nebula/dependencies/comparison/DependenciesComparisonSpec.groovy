@@ -135,4 +135,25 @@ class DependenciesComparisonSpec extends Specification {
         inconsistent[1] == "    1.0.0 -> 1.1.0 [compileClasspath,runtimeClasspath]"
         inconsistent[2] == "    1.0.0 -> 1.1.1 [testCompileClasspath,testRuntimeClasspath]"
     }
+
+    def 'should handle dependency moving from project to maven'() {
+        given:
+        def old = new ConfigurationsSet([
+                "compileClasspath": new Dependencies(["test.nebula:a": null]),
+                "runtimeClasspath": new Dependencies(["test.nebula:a": null]),
+        ])
+        def updated = new ConfigurationsSet([
+                "compileClasspath": new Dependencies(["test.nebula:a": "1.1.0"]),
+                "runtimeClasspath": new Dependencies(["test.nebula:a": "1.1.0"]),
+        ])
+
+        when:
+        def result = new DependenciesComparison().performDiff(old, updated)
+
+        then:
+        result.size() == 1
+        def diff = result.first()
+        diff.isNew()
+        !diff.isUpdated()
+    }
 }

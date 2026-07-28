@@ -24,12 +24,19 @@ class DependencyDiff {
     String dependency
     Map<VersionDiff, DiffInfo> diff = [:].withDefault { versionDiff -> new DiffInfo(versionDiff) }
 
+    /**
+     * versions can be null if they are project dependencies, which should be considered as "not locked"
+     */
+    private static boolean isNullOrEmpty(String versionString) {
+        return versionString == null || versionString == ''
+    }
+
     void addDiff(String oldVersion, String updatedVersion, String configuration) {
         diff.get(new VersionDiff(oldVersion, updatedVersion)).addConfiguration(configuration)
     }
 
     Boolean isNew() {
-        diff.size() == 1 && diff.values()[0].oldVersion == '' && diff.values()[0].updatedVersion != ''
+        diff.size() == 1 && isNullOrEmpty(diff.values()[0].oldVersion) && !isNullOrEmpty(diff.values()[0].updatedVersion)
     }
 
     String newDiffString() {
@@ -37,7 +44,7 @@ class DependencyDiff {
     }
 
     Boolean isRemoved() {
-        diff.size() == 1 && diff.values()[0].oldVersion != '' && diff.values()[0].updatedVersion == ''
+        diff.size() == 1 && !isNullOrEmpty(diff.values()[0].oldVersion) && isNullOrEmpty(diff.values()[0].updatedVersion)
     }
 
     String removedDiffString() {
@@ -45,7 +52,7 @@ class DependencyDiff {
     }
 
     Boolean isUpdated() {
-        diff.size() == 1 && diff.values()[0].oldVersion != '' && diff.values()[0].updatedVersion != ''
+        diff.size() == 1 && !isNullOrEmpty(diff.values()[0].oldVersion) && !isNullOrEmpty(diff.values()[0].updatedVersion)
     }
 
     String updatedDiffString() {

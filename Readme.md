@@ -1,5 +1,7 @@
 # Nebula dependencies comparison library
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.netflix.nebula/nebula-dependencies-comparison?style=for-the-badge&color=01AF01)](https://repo1.maven.org/maven2/com/netflix/nebula/nebula-dependencies-comparison/)
+
 This library allows to compare dependencies between two project resolution states across configurations.
 
 It allows to find out:

@@ -1,13 +1,8 @@
 plugins {
-    id "nebula.netflixoss" version "10.3.0"
+    id("com.netflix.nebula.root")
+    id("com.netflix.nebula.library")
     id "groovy"
 }
-
-repositories {
-    mavenCentral()
-}
-
-targetCompatibility = 1.8
 
 description 'Library for comparing dependencies in configurations'
 
@@ -21,6 +16,14 @@ dependencies {
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
 }
 
-tasks.withType(Test).configureEach {
-    useJUnitPlatform()
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+tasks.wrapper {
+    distributionType = Wrapper.DistributionType.BIN
+    gradleVersion = "9.6.1"
+    distributionSha256Sum = "9c0f7faeeb306cb14e4279a3e084ca6b596894089a0638e68a07c945a32c9e14"
 }

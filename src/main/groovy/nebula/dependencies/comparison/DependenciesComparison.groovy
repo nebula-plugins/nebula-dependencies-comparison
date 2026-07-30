@@ -15,6 +15,8 @@
  */
 package nebula.dependencies.comparison
 
+import static com.netflix.nebula.dependencies.comparison.StringUtil.isNullOrEmpty
+
 class DependenciesComparison {
 
     List<DependencyDiff> performDiff(ConfigurationsSet old, ConfigurationsSet updated) {
@@ -29,7 +31,7 @@ class DependenciesComparison {
                 String oldVersion = oldDependencies.usedVersion(dependency)
                 String updatedVersion = updatedDependencies.usedVersion(dependency)
 
-                if (oldVersion != updatedVersion) {
+                if ((!isNullOrEmpty(oldVersion) || !isNullOrEmpty(updatedVersion)) && oldVersion != updatedVersion) {
                     DependencyDiff diff = memory.get(dependency)
                     diff.addDiff(oldVersion, updatedVersion, configuration)
                 }

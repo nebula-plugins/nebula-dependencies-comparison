@@ -16,6 +16,7 @@ contacts {
 }
 
 dependencies {
+    api("org.jspecify:jspecify:1.0.0")
     // Use the latest Groovy version for building this library
     implementation("org.codehaus.groovy:groovy-all:3.0.25")
 

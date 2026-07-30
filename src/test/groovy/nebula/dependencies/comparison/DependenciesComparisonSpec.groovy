@@ -60,6 +60,24 @@ class DependenciesComparisonSpec extends Specification {
         diff.newDiffString() == "  test.nebula:a: 1.0.0"
     }
 
+    def 'should handle new project dependency'() {
+        given:
+        def old = new ConfigurationsSet([
+                "compileClasspath": new Dependencies([:]),
+                "runtimeClasspath": new Dependencies([:]),
+        ])
+        def updated = new ConfigurationsSet([
+                "compileClasspath": new Dependencies(["test.nebula:a": null]),
+                "runtimeClasspath": new Dependencies(["test.nebula:a": null]),
+        ])
+
+        when:
+        def result = new DependenciesComparison().performDiff(old, updated)
+
+        then:
+        result.size() == 0
+    }
+
     def 'should handle removed dependency'() {
         given:
         def old = new ConfigurationsSet([

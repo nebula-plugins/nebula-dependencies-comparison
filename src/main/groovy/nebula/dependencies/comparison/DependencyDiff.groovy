@@ -18,18 +18,13 @@ package nebula.dependencies.comparison
 import groovy.transform.Canonical
 import groovy.transform.Sortable
 
+import static com.netflix.nebula.dependencies.comparison.StringUtil.isNullOrEmpty
+
 @Canonical
 @Sortable(includes = ['dependency'])
 class DependencyDiff {
     String dependency
     Map<VersionDiff, DiffInfo> diff = [:].withDefault { versionDiff -> new DiffInfo(versionDiff) }
-
-    /**
-     * versions can be null if they are project dependencies, which should be considered as "not locked"
-     */
-    private static boolean isNullOrEmpty(String versionString) {
-        return versionString == null || versionString == ''
-    }
 
     void addDiff(String oldVersion, String updatedVersion, String configuration) {
         diff.get(new VersionDiff(oldVersion, updatedVersion)).addConfiguration(configuration)

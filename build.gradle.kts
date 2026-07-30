@@ -1,19 +1,26 @@
 plugins {
     id("com.netflix.nebula.root")
     id("com.netflix.nebula.library")
-    id "groovy"
+    id("groovy")
 }
 
-description 'Library for comparing dependencies in configurations'
+description = "Library for comparing dependencies in configurations"
 
-group = 'com.netflix.nebula'
+group = "com.netflix.nebula"
+
+contacts {
+    addPerson("nebula-plugins-oss@netflix.com") {
+        moniker = "Nebula Plugins Maintainers"
+        github = "nebula-plugins"
+    }
+}
 
 dependencies {
     // Use the latest Groovy version for building this library
-    implementation 'org.codehaus.groovy:groovy-all:3.0.9'
+    implementation("org.codehaus.groovy:groovy-all:3.0.25")
 
     // Use the awesome Spock testing and specification framework
-    testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+    testImplementation("org.spockframework:spock-core:2.4-groovy-3.0")
 }
 
 java {

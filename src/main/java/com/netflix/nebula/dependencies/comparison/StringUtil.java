@@ -5,6 +5,7 @@ import org.jspecify.annotations.Nullable;
 
 @NullMarked
 public class StringUtil {
+    private StringUtil(){}
     /**
      * versions can be null if they are project dependencies, which should be considered as "not locked"
      */

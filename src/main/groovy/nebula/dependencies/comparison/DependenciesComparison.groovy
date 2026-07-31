@@ -15,11 +15,12 @@
  */
 package nebula.dependencies.comparison
 
-import static com.netflix.nebula.dependencies.comparison.StringUtil.isNullOrEmpty
+import com.netflix.nebula.dependencies.comparison.Dependencies
+import com.netflix.nebula.dependencies.comparison.DependenciesComparisonUtil
 
 class DependenciesComparison {
 
-    List<DependencyDiff> performDiff(ConfigurationsSet old, ConfigurationsSet updated) {
+    static List<DependencyDiff> performDiff(ConfigurationsSet old, ConfigurationsSet updated) {
         def memory = [:].withDefault { String dependency -> new DependencyDiff(dependency) }
         Set<String> configurations = old.configurations() + updated.configurations()
         configurations.forEach { configuration ->
@@ -31,7 +32,7 @@ class DependenciesComparison {
                 String oldVersion = oldDependencies.usedVersion(dependency)
                 String updatedVersion = updatedDependencies.usedVersion(dependency)
 
-                if ((!isNullOrEmpty(oldVersion) || !isNullOrEmpty(updatedVersion)) && oldVersion != updatedVersion) {
+                if (DependenciesComparisonUtil.hasDiff(oldDependencies, updatedDependencies, dependency)) {
                     DependencyDiff diff = memory.get(dependency)
                     diff.addDiff(oldVersion, updatedVersion, configuration)
                 }
@@ -41,7 +42,7 @@ class DependenciesComparison {
         memory.values().toSorted()
     }
 
-    Map<String, List<DependencyDiff>> performDiffByConfiguration(ConfigurationsSet old, ConfigurationsSet updated) {
+    static Map<String, List<DependencyDiff>> performDiffByConfiguration(ConfigurationsSet old, ConfigurationsSet updated) {
         Map
         Set<String> configurations = old.configurations() + updated.configurations()
         configurations.collectEntries { configuration ->
@@ -53,7 +54,7 @@ class DependenciesComparison {
                 String oldVersion = oldDependencies.usedVersion(dependency)
                 String updatedVersion = updatedDependencies.usedVersion(dependency)
 
-                if (oldVersion != updatedVersion) {
+                if (DependenciesComparisonUtil.hasDiff(oldDependencies, updatedDependencies, dependency)) {
                     DependencyDiff diff = new DependencyDiff(dependency)
                     diff.addDiff(oldVersion, updatedVersion, configuration)
                     return diff

@@ -1,5 +1,6 @@
 package com.netflix.nebula.dependencies.comparison;
 
+import nebula.dependencies.comparison.Dependencies;
 import org.jspecify.annotations.NullMarked;
 
 import static com.netflix.nebula.dependencies.comparison.StringUtil.isNullOrEmpty;

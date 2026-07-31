@@ -15,7 +15,7 @@
  */
 package nebula.dependencies.comparison
 
-import com.netflix.nebula.dependencies.comparison.Dependencies
+
 import spock.lang.Specification
 
 class DependenciesComparisonSpec extends Specification {

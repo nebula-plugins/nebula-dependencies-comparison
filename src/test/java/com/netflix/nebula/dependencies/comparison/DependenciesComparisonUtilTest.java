@@ -1,5 +1,6 @@
 package com.netflix.nebula.dependencies.comparison;
 
+import nebula.dependencies.comparison.Dependencies;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

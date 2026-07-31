@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.netflix.nebula.dependencies.comparison;
+package nebula.dependencies.comparison;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

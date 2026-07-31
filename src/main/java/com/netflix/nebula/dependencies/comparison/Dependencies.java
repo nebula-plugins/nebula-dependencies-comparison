@@ -13,19 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nebula.dependencies.comparison
+package com.netflix.nebula.dependencies.comparison;
 
-import groovy.transform.Canonical
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
-@Canonical
-class Dependencies {
-    Map<String, String> dependenciesWithVersions
+import java.util.Map;
+import java.util.Set;
 
-    String usedVersion(String dependency) {
-        dependenciesWithVersions.getOrDefault(dependency, '')
+@Data
+@AllArgsConstructor
+@NullMarked
+public class Dependencies {
+
+    private final Map<String, @Nullable String> dependenciesWithVersions;
+
+    public @Nullable String usedVersion(String dependency) {
+        return dependenciesWithVersions.getOrDefault(dependency, "");
     }
 
-    Set<String> allModules() {
-        dependenciesWithVersions.keySet()
+    public Set<String> allModules() {
+        return dependenciesWithVersions.keySet();
     }
 }

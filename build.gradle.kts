@@ -2,6 +2,8 @@ plugins {
     id("com.netflix.nebula.root")
     id("com.netflix.nebula.library")
     id("groovy")
+    id("io.freefair.lombok") version "9.5.0"
+    jacoco
 }
 
 description = "Library for comparing dependencies in configurations"
@@ -22,6 +24,7 @@ dependencies {
 
     // Use the awesome Spock testing and specification framework
     testImplementation("org.spockframework:spock-core:2.4-groovy-3.0")
+    testImplementation("org.assertj:assertj-core:3.27.7")
 }
 
 java {
@@ -34,4 +37,8 @@ tasks.wrapper {
     distributionType = Wrapper.DistributionType.BIN
     gradleVersion = "9.6.1"
     distributionSha256Sum = "9c0f7faeeb306cb14e4279a3e084ca6b596894089a0638e68a07c945a32c9e14"
+}
+
+tasks.named("test") {
+    finalizedBy(tasks.named("jacocoTestReport"))
 }

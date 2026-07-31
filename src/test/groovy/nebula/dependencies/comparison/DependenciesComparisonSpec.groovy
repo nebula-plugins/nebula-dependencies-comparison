@@ -15,6 +15,7 @@
  */
 package nebula.dependencies.comparison
 
+import com.netflix.nebula.dependencies.comparison.Dependencies
 import spock.lang.Specification
 
 class DependenciesComparisonSpec extends Specification {
@@ -76,6 +77,25 @@ class DependenciesComparisonSpec extends Specification {
 
         then:
         result.size() == 0
+    }
+
+    def 'should handle new project dependency by configuration'() {
+        given:
+        def old = new ConfigurationsSet([
+                "compileClasspath": new Dependencies([:]),
+                "runtimeClasspath": new Dependencies([:]),
+        ])
+        def updated = new ConfigurationsSet([
+                "compileClasspath": new Dependencies(["test.nebula:a": null]),
+                "runtimeClasspath": new Dependencies(["test.nebula:a": null]),
+        ])
+
+        when:
+        def result = new DependenciesComparison().performDiffByConfiguration(old, updated)
+
+        then:
+        result.size() == 2
+        result["compileClasspath"].size() == 0
     }
 
     def 'should handle removed dependency'() {

@@ -15,7 +15,7 @@
  */
 package nebula.dependencies.comparison
 
-import com.netflix.nebula.dependencies.comparison.Dependencies
+
 import com.netflix.nebula.dependencies.comparison.DependenciesComparisonUtil
 
 class DependenciesComparison {
